@@ -1,4 +1,6 @@
 class Card
+  attr_reader :value
+
   def initialize(value)
     @faceup = false
     @value = value

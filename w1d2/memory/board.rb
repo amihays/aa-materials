@@ -1,6 +1,8 @@
 require_relative "card.rb"
 
 class Board
+  attr_reader :grid
+
   def initialize
     populate
   end
@@ -11,14 +13,15 @@ class Board
       2.times { cards << Card.new(num) }
     end
     cards.shuffle!
+    puts cards
     @grid = []
     4.times do |i|
-      @grid.push(cards[i...i + 4])
+      @grid.push(cards[i * 4...(i * 4) + 4])
     end
   end
 
   def render
-    @grid.map { |row| row.map { |card| card.to_s }.join(" ") }.join("\n")
+    puts @grid.map { |row| row.map { |card| card.to_s }.join(" ") }.join("\n")
   end
 
   def won?
