@@ -1,7 +1,7 @@
 class Tile
 
-  def initialize(value, given)
-    @given = given
+  def initialize(value)
+    @given = value > 0 ? true : false
     @value = value
   end
 
