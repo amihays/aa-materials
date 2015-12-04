@@ -21,7 +21,7 @@ class Board
   end
 
   def render
-    puts @grid.map { |row| row.map { |card| card.to_s }.join(" ") }.join("\n")
+    puts @grid.map { |row| row.join(" ") }.join("\n")
   end
 
   def won?
