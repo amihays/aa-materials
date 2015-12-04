@@ -1,3 +1,5 @@
+require_relative "tile.rb"
+
 class Board
   def initialize(grid)
     @grid = grid
@@ -11,21 +13,23 @@ class Board
   end
 
   def []=(position,value)
-    @grid[position[0]][position[1]] = value
+    @grid[position[0]][position[1]].value = value
   end
 
   def render
-    @grid.map { |row| row.map { |tile| tile.to_s }.join(" ") }.join("\n")
+    puts @grid.map { |row| row.map { |tile| tile.to_s }.join(" ") }.join("\n")
   end
 
   def solved?
     return false if @grid.any? { |row| !section_solved?(row) }
-    return false if @grid.transpose.any? { |col| !section_solved?(column) }
-    return false if squares.any? { |square| !square_solved?(square) }
+    return false if @grid.transpose.any? { |column| !section_solved?(column) }
+    return false if squares.any? { |square| !section_solved?(square) }
+    true
   end
 
   def section_solved?(section_array)
-    section_array.sort == ("1".."9").to_a
+    values = section_array.map { |tile| tile.value.to_i }.sort
+    values == (1..9).to_a
   end
 
   def squares
