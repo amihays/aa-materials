@@ -24,4 +24,23 @@ class PolyTreeNode
     raise "That's not your child!" unless @children.include?(child)
     child.parent = nil
   end
+
+  def dfs(target_value)
+    return self if value == target_value
+    @children.each do |child|
+      result = child.dfs(target_value)
+      return result unless result.nil?
+    end
+    nil
+  end
+
+  def bfs(target_value)
+    node_queue = [self]
+    until node_queue.empty?
+      current_node = node_queue.shift
+      return current_node if current_node.value == target_value
+      node_queue.concat(current_node.children)
+    end
+    nil
+  end
 end
