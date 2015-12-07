@@ -9,7 +9,6 @@ class KnightPathFinder
   end
 
   def find_path(end_pos)
-    p root_node
     end_node = root_node.dfs(end_pos)
 
     path = []
@@ -52,6 +51,3 @@ class KnightPathFinder
     end
   end
 end
-
-kpf = KnightPathFinder.new([4, 4])
-puts kpf.find_path([0, 0])
