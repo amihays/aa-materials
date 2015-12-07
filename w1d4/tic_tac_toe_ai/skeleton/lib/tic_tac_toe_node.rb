@@ -32,17 +32,15 @@ class TicTacToeNode
     end
   end
 
-  # This method generates an array of all moves that can be made after
-  # the current move.
   def children
     children_nodes = []
-    @board.rows.each_with_index do |row, row_idx|
-      row.each_with_index do |cell, col_idx|
+    3.times do |row_idx|
+      3.times do |col_idx|
         pos = [row_idx, col_idx]
         if @board.empty?(pos)
           duped_board = @board.dup
           duped_board[pos] = @next_mover_mark
-          other_mark = @next_mover_mark = :x ? :o : :x
+          other_mark = @next_mover_mark == :x ? :o : :x
           children_nodes.push(TicTacToeNode.new(duped_board, other_mark, pos))
         end
       end
