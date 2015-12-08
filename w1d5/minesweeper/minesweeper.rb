@@ -1,3 +1,4 @@
+require "yaml"
 require_relative "board"
 
 class Minesweeper
@@ -19,7 +20,13 @@ class Minesweeper
     @board.display
     prompt
     input = get_input
-    if input[0] == "f"
+    perform_move(input)
+  end
+
+  def perform_move(input)
+    if input[0].downcase == "save"
+      save
+    elsif input[0] == "f"
       @board[input[1]].toggle_flag
     elsif input[0] == "r"
       @board[input[1]].reveal
@@ -42,19 +49,35 @@ class Minesweeper
     puts "What action would you like to take?"
     puts "(ex: 'f 1,2' to flag position [1, 2])"
     puts "(ex: 'r 3,7' to reveal position [3, 7])"
+    puts "(ex: 'save' to save)"
   end
 
   def get_input
     input = gets.chomp
-    parse(input)
+    parse_input(input)
   end
 
-  def parse(input)
+  def parse_input(input)
+    return [input] if input.downcase == "save"
     action, position = input.split(" ")
     position = position.split(",").map{ |el| el.to_i }
     [action, position]
   end
+
+  def save
+    puts "What filename would you like to save to?"
+    filename = gets.chomp
+
+    File.write(filename, YAML.dump(self))
+  end
 end
 
-game = Minesweeper.new()
-game.play
+
+if __FILE__ == $PROGRAM_NAME
+  case ARGV.count
+  when 0
+    Minesweeper.new().play
+  when 1
+    YAML.load_file(ARGV.shift).play
+  end
+end
