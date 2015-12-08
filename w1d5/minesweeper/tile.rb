@@ -1,9 +1,9 @@
 class Tile
   attr_reader :bombed, :revealed
-  
-  DIFFS = [[-1, -1], [0, -1], [-1, 0], [1, 0], [0, 1], [1, 1]]
 
-  def initialize(board, position, bombed)
+  DIFFS = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [1, 0], [1, 1], [1, -1], [0, 1]]
+
+  def initialize(board, position)
     @board = board
     @position = position
     @bombed = bombed
@@ -16,15 +16,17 @@ class Tile
   end
 
   def reveal
-    @flagged = false
-    @revealed = true
-    if neighbor_bomb_count == 0
-      neighbors.each { |neighbor| neighbor.reveal }
+    unless @flagged
+      @revealed = true
+      if neighbor_bomb_count == 0
+        neighbors.reject { |neighbor| neighbor.revealed }
+                 .each { |neighbor| neighbor.reveal }
+      end
     end
   end
 
-  def flag
-    @flagged = true
+  def toggle_flag
+    @flagged  = @flagged ? false : true
   end
 
   def neighbor_bomb_count
@@ -35,7 +37,7 @@ class Tile
     neighbors = []
     DIFFS.each do |diff|
       neighbor_pos = [@position[0] + diff[0], @position[1] + diff[1]]
-      next if neighbor_pos.any? { |el| el < 0 || el >= @board.length }
+      next if neighbor_pos.any? { |el| el < 0 || el >= @board.grid.length }
       neighbors << @board[neighbor_pos]
     end
     neighbors
