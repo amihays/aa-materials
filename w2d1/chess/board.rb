@@ -55,6 +55,3 @@ class Board
     @grid[pos[0]][pos[1]] = val
   end
 end
-
-board = Board.new()
-p board[[0,1]].moves
