@@ -1,30 +1,30 @@
-require_relative "piece"
+require_relative "queen"
 
 class Board
   attr_reader :grid
 
   def initialize
-    @grid = Array.new(8) { Array.new(8) { [] } }
+    @grid = Array.new(8) { Array.new(8) { nil } }
     populate_grid
   end
 
   def populate_grid
-    self[[0, 0]] = Piece.new()
-    self[[0, 1]] = Piece.new()
-    self[[0, 2]] = Piece.new()
-    self[[0, 3]] = Piece.new()
-    self[[0, 4]] = Piece.new()
-    self[[0, 5]] = Piece.new()
-    self[[0, 6]] = Piece.new()
-    self[[0, 7]] = Piece.new()
-    self[[7, 0]] = Piece.new()
-    self[[7, 1]] = Piece.new()
-    self[[7, 2]] = Piece.new()
-    self[[7, 3]] = Piece.new()
-    self[[7, 4]] = Piece.new()
-    self[[7, 5]] = Piece.new()
-    self[[7, 6]] = Piece.new()
-    self[[7, 7]] = Piece.new()
+    # self[[0, 0]] = Rook.new([0, 0], self, :black)
+    # self[[0, 1]] = Knight.new([0, 1], self, :black)
+    # self[[0, 2]] = Bishop.new([0, 2], self, :black)
+    self[[0, 3]] = Queen.new([0, 3], self, :black)
+    # self[[0, 4]] = King.new([0, 4], self, :black)
+    # self[[0, 5]] = Bishop.new([0, 5], self, :black)
+    # self[[0, 6]] = Knight.new([0, 6], self, :black)
+    # self[[0, 7]] = Rook.new([0, 7], self, :black)
+    # self[[7, 0]] = Rook.new([7, 0], self, :white)
+    # self[[7, 1]] = Knight.new([7, 1], self, :white)
+    # self[[7, 2]] = Bishop.new([7, 2], self, :white)
+    # self[[7, 3]] = Queen.new([7, 3], self, :white)
+    # self[[7, 4]] = King.new([7, 4], self, :white)
+    # self[[7, 5]] = Bishop.new([7, 5], self, :white)
+    # self[[7, 6]] = Knight.new([7, 6], self, :white)
+    # self[[7, 7]] = Rook.new([7, 7], self, :white)
   end
 
   def move(start_pos, end_pos)
@@ -35,10 +35,9 @@ class Board
   end
 
   def in_bounds?(new_pos)
-    new_pos.all? { |coord| coord > 0 && coord < @grid.length }
+    new_pos.all? { |coord| coord >= 0 && coord < @grid.length }
   end
 
-  private
   def [](pos)
     @grid[pos[0]][pos[1]]
   end
@@ -47,3 +46,6 @@ class Board
     @grid[pos[0]][pos[1]] = val
   end
 end
+
+board = Board.new()
+p board[[0,3]].moves
