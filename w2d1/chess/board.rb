@@ -1,4 +1,9 @@
 require_relative "queen"
+require_relative "king"
+require_relative "rook"
+require_relative "knight"
+require_relative "pawn"
+require_relative "bishop"
 
 class Board
   attr_reader :grid
@@ -9,22 +14,26 @@ class Board
   end
 
   def populate_grid
-    # self[[0, 0]] = Rook.new([0, 0], self, :black)
-    # self[[0, 1]] = Knight.new([0, 1], self, :black)
-    # self[[0, 2]] = Bishop.new([0, 2], self, :black)
+    self[[0, 0]] = Rook.new([0, 0], self, :black)
+    self[[0, 1]] = Knight.new([0, 1], self, :black)
+    self[[0, 2]] = Bishop.new([0, 2], self, :black)
     self[[0, 3]] = Queen.new([0, 3], self, :black)
-    # self[[0, 4]] = King.new([0, 4], self, :black)
-    # self[[0, 5]] = Bishop.new([0, 5], self, :black)
-    # self[[0, 6]] = Knight.new([0, 6], self, :black)
-    # self[[0, 7]] = Rook.new([0, 7], self, :black)
-    # self[[7, 0]] = Rook.new([7, 0], self, :white)
-    # self[[7, 1]] = Knight.new([7, 1], self, :white)
-    # self[[7, 2]] = Bishop.new([7, 2], self, :white)
-    # self[[7, 3]] = Queen.new([7, 3], self, :white)
-    # self[[7, 4]] = King.new([7, 4], self, :white)
-    # self[[7, 5]] = Bishop.new([7, 5], self, :white)
-    # self[[7, 6]] = Knight.new([7, 6], self, :white)
-    # self[[7, 7]] = Rook.new([7, 7], self, :white)
+    self[[0, 4]] = King.new([0, 4], self, :black)
+    self[[0, 5]] = Bishop.new([0, 5], self, :black)
+    self[[0, 6]] = Knight.new([0, 6], self, :black)
+    self[[0, 7]] = Rook.new([0, 7], self, :black)
+    self[[7, 0]] = Rook.new([7, 0], self, :white)
+    self[[7, 1]] = Knight.new([7, 1], self, :white)
+    self[[7, 2]] = Bishop.new([7, 2], self, :white)
+    self[[7, 3]] = Queen.new([7, 3], self, :white)
+    self[[7, 4]] = King.new([7, 4], self, :white)
+    self[[7, 5]] = Bishop.new([7, 5], self, :white)
+    self[[7, 6]] = Knight.new([7, 6], self, :white)
+    self[[7, 7]] = Rook.new([7, 7], self, :white)
+    8.times do |col|
+      self[[1, col]] = Pawn.new([1, col], self, :black)
+      self[[6, col]] = Pawn.new([1, col], self, :white)
+    end
   end
 
   def move(start_pos, end_pos)
@@ -48,4 +57,4 @@ class Board
 end
 
 board = Board.new()
-p board[[0,3]].moves
+p board[[0,1]].moves
