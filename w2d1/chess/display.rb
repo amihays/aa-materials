@@ -1,5 +1,4 @@
 require_relative "board"
-require_relative "game"
 require_relative "cursorable"
 require "colorize"
 
@@ -41,7 +40,3 @@ class Display
     build_grid.each { |row| puts row.join }
   end
 end
-
-board = Board.new()
-display = Display.new(board)
-display.render

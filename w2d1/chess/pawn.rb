@@ -21,8 +21,7 @@ class Pawn < SteppingPiece
       positions << new_pos
       if @first_move && board[new_pos].nil?
         new_pos = [position[0] + move_dir * 2, position[1]]
-        if board.in_bounds?(new_pos) &&
-          (board[new_pos].nil? || board[new_pos].color != color)
+        if board.in_bounds?(new_pos) && board[new_pos].nil?
           positions << new_pos
         end
       end

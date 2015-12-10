@@ -66,8 +66,8 @@ class Board
 
   def checkmate?(color)
     pieces = find_pieces(color)
-    out_of_moves = pieces.all? { |piece| piece.valid_moves.empty? }
-    out_of_moves && in_check?
+    moves = pieces.select { |piece| !piece.valid_moves.empty? }
+    moves.empty? && in_check?(color)
   end
 
   def in_bounds?(new_pos)
