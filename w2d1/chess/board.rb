@@ -46,7 +46,9 @@ class Board
   def in_check?(color)
     king_pos = find_king(color)
     raise "No king!" if king_pos.nil?
-
+    other_color = color == :white ? :black : :white
+    opposing_pieces = find_pieces(other_color)
+    opposing_pieces.any? { |piece| piece.moves.include?(king_pos) }
   end
 
   def checkmate?(color)
@@ -65,6 +67,18 @@ class Board
   end
 
   private
+  def find_pieces(color)
+    pieces = []
+    @grid.each_with_index do |row, row_idx|
+      row.each_with_index do |cell, col_idx|
+        if !cell.nil? && cell.color == color
+          pieces << self[[row_idx, col_idx]]
+        end
+      end
+    end
+    pieces
+  end
+
   def find_king(color)
     @grid.each_with_index do |row, row_idx|
       row.each_with_index do |cell, col_idx|
@@ -78,4 +92,4 @@ class Board
 end
 
 board = Board.new
-p board[[1,0]].moves
+p board.in_check?(:white)
