@@ -8,9 +8,9 @@ require_relative "bishop"
 class Board
   attr_reader :grid
 
-  def initialize
+  def initialize(fill_board = true)
     @grid = Array.new(8) { Array.new(8) { nil } }
-    populate_grid
+    populate_grid if fill_board
   end
 
   def populate_grid
@@ -32,7 +32,7 @@ class Board
     self[[7, 7]] = Rook.new([7, 7], self, :white)
     8.times do |col|
       self[[1, col]] = Pawn.new([1, col], self, :black)
-      self[[6, col]] = Pawn.new([1, col], self, :white)
+      self[[6, col]] = Pawn.new([6, col], self, :white)
     end
   end
 
@@ -52,6 +52,9 @@ class Board
   end
 
   def checkmate?(color)
+    pieces = find_pieces(color)
+    out_of_moves = pieces.all? { |piece| piece.valid_moves.empty? }
+    out_of_moves && in_check?
   end
 
   def in_bounds?(new_pos)
@@ -64,6 +67,19 @@ class Board
 
   def []=(pos, val)
     @grid[pos[0]][pos[1]] = val
+  end
+
+  def dup
+    dup_board = Board.new(false)
+    self.grid.each_with_index do |row, row_idx|
+      row.each_with_index do |cell, col_idx|
+        unless cell.nil?
+          dup_piece = cell.dup(dup_board)
+          dup_board[[row_idx, col_idx]] = dup_piece
+        end
+      end
+    end
+    dup_board
   end
 
   private
@@ -92,4 +108,4 @@ class Board
 end
 
 board = Board.new
-p board.in_check?(:white)
+p board.dup
