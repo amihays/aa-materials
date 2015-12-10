@@ -20,7 +20,7 @@ class Display
   def build_row(row, i)
     row.map.with_index do |piece, j|
       color_options = colors_for(i, j)
-      piece.to_s.colorize(color_options)
+      piece.nil? ? "   ".colorize(color_options) : piece.to_s.colorize(color_options)
     end
   end
 

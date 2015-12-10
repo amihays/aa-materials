@@ -7,10 +7,6 @@ class Piece
     @color = color
   end
 
-  def moves
-    []
-  end
-
   private
   attr_reader :board
 end

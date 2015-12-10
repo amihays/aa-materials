@@ -43,6 +43,15 @@ class Board
     self[end_pos] = piece
   end
 
+  def in_check?(color)
+    king_pos = find_king(color)
+    raise "No king!" if king_pos.nil?
+
+  end
+
+  def checkmate?(color)
+  end
+
   def in_bounds?(new_pos)
     new_pos.all? { |coord| coord >= 0 && coord < @grid.length }
   end
@@ -54,4 +63,19 @@ class Board
   def []=(pos, val)
     @grid[pos[0]][pos[1]] = val
   end
+
+  private
+  def find_king(color)
+    @grid.each_with_index do |row, row_idx|
+      row.each_with_index do |cell, col_idx|
+        if cell.is_a?(King) && cell.color == color
+          return [row_idx, col_idx]
+        end
+      end
+    end
+    nil
+  end
 end
+
+board = Board.new
+p board[[1,0]].moves
