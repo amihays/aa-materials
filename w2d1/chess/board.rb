@@ -36,11 +36,18 @@ class Board
     end
   end
 
-  def move(start_pos, end_pos)
-    raise "No piece there" if self[start_pos].nil?
+  def move(start_pos, end_pos, turn_color)
     piece = self[start_pos]
-    self[start_pos] = nil
-    self[end_pos] = piece
+    if piece.nil?
+      raise "No piece there"
+    elsif piece.color != turn_color
+      raise "That is not your piece"
+    elsif !piece.moves.include?(end_pos)
+      raise "That piece can't move like that"
+    elsif !piece.valid_moves.include?(end_pos)
+      raise "Move would leave you in check"
+    end
+    move!(start_pos, end_pos)
   end
 
   def move!(start_pos, end_pos)
@@ -114,4 +121,4 @@ class Board
 end
 
 board = Board.new
-p board[[0,1]].valid_moves
+board.move([1,2],[2,2],:black)
