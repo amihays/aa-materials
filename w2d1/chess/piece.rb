@@ -1,5 +1,6 @@
 class Piece
-  attr_reader :position, :color
+  attr_accessor :position
+  attr_reader :color
 
   def initialize(position, board, color)
     @position = position
@@ -8,6 +9,9 @@ class Piece
   end
 
   def move_into_check?(pos)
+    board = @board.dup
+    board.move!(position, pos)
+    board.in_check?
   end
 
   def dup(new_board)

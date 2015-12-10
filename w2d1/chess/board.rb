@@ -43,6 +43,12 @@ class Board
     self[end_pos] = piece
   end
 
+  def move!(start_pos, end_pos)
+    piece = self[start_pos]
+    piece.position = end_pos
+    self[start_pos], self[end_pos] = nil, piece
+  end
+
   def in_check?(color)
     king_pos = find_king(color)
     raise "No king!" if king_pos.nil?
@@ -108,4 +114,5 @@ class Board
 end
 
 board = Board.new
-p board.dup
+board.move!([0,1],[2,2])
+p board
