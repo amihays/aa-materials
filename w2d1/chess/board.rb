@@ -114,5 +114,4 @@ class Board
 end
 
 board = Board.new
-board.move!([0,1],[2,2])
-p board
+p board[[0,1]].valid_moves

@@ -8,10 +8,14 @@ class Piece
     @color = color
   end
 
+  def valid_moves
+    moves.reject { |pos| move_into_check?(pos) }
+  end
+
   def move_into_check?(pos)
     board = @board.dup
     board.move!(position, pos)
-    board.in_check?
+    board.in_check?(color)
   end
 
   def dup(new_board)
