@@ -26,3 +26,17 @@ class Array
     transpose
   end
 end
+
+def stock_picker(prices)
+  return if !prices.is_a?(Array) || prices.empty?
+  max_diff = 0
+  days = [0, 0]
+  prices.each_index do |day1|
+    (day1...prices.length).each do |day2|
+      if prices[day2] - prices[day1] > prices[days[1]] - prices[days[0]]
+        days = [day1, day2]
+      end
+    end
+  end
+  days
+end

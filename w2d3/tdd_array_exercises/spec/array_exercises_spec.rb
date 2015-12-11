@@ -52,7 +52,7 @@ describe Array do
 
   describe "#my_transpose" do
     subject { [[1,2,3],[4,5,6],[7,8,9]] }
-    
+
     it "transposes an empty matrix" do
       expect([].my_transpose).to eq([])
     end
@@ -68,6 +68,16 @@ describe Array do
     it "doesn't modify the original matrix" do
       subject.my_transpose
       expect(subject).to eq([[1,2,3],[4,5,6],[7,8,9]])
+    end
+  end
+
+  describe "#stock_picker" do
+    it "buys and sells on same day when stock price always drops" do
+      expect(stock_picker([5, 4, 3, 2, 1]).inject(&:-)).to eq(0)
+    end
+
+    it "picks the most profitable pair of days" do
+      expect(stock_picker([1,5,3,4,7])).to eq([0,4])
     end
   end
 end
