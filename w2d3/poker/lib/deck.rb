@@ -1,3 +1,5 @@
+require_relative "card"
+
 class Deck
   attr_reader :cards
 
@@ -5,6 +7,17 @@ class Deck
 
   def initialize
     build_cards
+  end
+
+  def draw(num = 1)
+    raise "Not enough cards in deck" if cards.length < num
+    draw_cards = []
+    num.times { draw_cards << cards.pop }
+    draw_cards
+  end
+
+  def shuffle!
+    cards.shuffle!
   end
 
   private
