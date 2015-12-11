@@ -55,6 +55,3 @@ class Game
     stacks[1] == [3, 2, 1] || stacks[2] == [3,2,1]
   end
 end
-
-game = Game.new
-game.play
