@@ -44,6 +44,10 @@ describe Array do
     it "returns multiple pairs sorted correctly" do
       expect([3,2,1,-3,-4,-5,-3].two_sum(-2)).to eq([[0,5], [1,4], [2,3], [2,6]])
     end
+
+    it "sets target value to zero when none is given" do
+      expect([3,2,1,-1,2,3].two_sum).to eq([[2,3]])
+    end
   end
 
 end
