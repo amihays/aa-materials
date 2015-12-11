@@ -3,7 +3,20 @@ require_relative "card"
 class Deck
   attr_reader :cards
 
-  SUITS = ["spade", "heart", "club", "diamond"]
+  SUITS = [:spade, :heart, :club, :diamond]
+  VALUES = [:ace,
+            :two,
+            :three,
+            :four,
+            :five,
+            :six,
+            :seven,
+            :eight,
+            :nine,
+            :ten,
+            :jack,
+            :queen,
+            :king]
 
   def initialize
     build_cards
@@ -24,7 +37,7 @@ class Deck
   def build_cards
     @cards = []
     SUITS.each do |suit|
-      (1..13).each do |value|
+      VALUES.each do |value|
         @cards << Card.new(suit, value)
       end
     end
