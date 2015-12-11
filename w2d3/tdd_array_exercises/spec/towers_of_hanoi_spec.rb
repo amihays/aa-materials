@@ -18,7 +18,7 @@ describe Game do
     it "raises an error when moving from an empty stack" do
       expect { game.move(1, 0) }.to raise_error("Cannot disc move from an empty stack")
     end
-    
+
     it "moves a disc from a pile to an empty pile" do
       game.move(0, 1)
       expect(game.stacks).to eq([[3,2], [1], []])
@@ -27,6 +27,24 @@ describe Game do
     it "raises an error when moving a disc onto a smaller disc" do
       game.move(0, 1)
       expect { game.move(0, 1) }.to raise_error("Cannot move larger disc onto smaller disc")
+    end
+  end
+
+  describe "#won?" do
+    it "returns true when the second or third stack is full" do
+      game.move(0, 1)
+      game.move(0, 2)
+      game.move(1, 2)
+      game.move(0, 1)
+      game.move(2, 0)
+      game.move(2, 1)
+      game.move(0, 1)
+      expect(game.won?).to be true
+    end
+
+    it "returns false when the game is not won" do
+      game.move(0, 1)
+      expect(game.won?).to be false
     end
   end
 end
