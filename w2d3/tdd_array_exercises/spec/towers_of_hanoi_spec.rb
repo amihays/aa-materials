@@ -1,7 +1,7 @@
 require "rspec"
 require "towers_of_hanoi"
 
-describe "Towers of Hanoi" do
+describe Game do
   subject(:game) { Game.new }
 
   describe "#initialize" do
@@ -15,6 +15,10 @@ describe "Towers of Hanoi" do
   end
 
   describe "#move" do
+    it "raises an error when moving from an empty stack" do
+      expect { game.move(1, 0) }.to raise_error("Cannot disc move from an empty stack")
+    end
+    
     it "moves a disc from a pile to an empty pile" do
       game.move(0, 1)
       expect(game.stacks).to eq([[3,2], [1], []])
