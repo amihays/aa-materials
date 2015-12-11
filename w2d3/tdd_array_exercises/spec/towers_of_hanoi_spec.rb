@@ -32,13 +32,8 @@ describe Game do
 
   describe "#won?" do
     it "returns true when the second or third stack is full" do
-      game.move(0, 1)
-      game.move(0, 2)
-      game.move(1, 2)
-      game.move(0, 1)
-      game.move(2, 0)
-      game.move(2, 1)
-      game.move(0, 1)
+      moves = [[0, 1], [0, 2], [1, 2], [0, 1], [2, 0], [2, 1], [0, 1]]
+      moves.each { |move| game.move(*move) }
       expect(game.won?).to be true
     end
 
