@@ -51,6 +51,8 @@ describe Array do
   end
 
   describe "#my_transpose" do
+    subject { [[1,2,3],[4,5,6],[7,8,9]] }
+    
     it "transposes an empty matrix" do
       expect([].my_transpose).to eq([])
     end
@@ -60,7 +62,12 @@ describe Array do
     end
 
     it "transposes a matrix with multiple rows and columns" do
-      expect([[1,2,3],[4,5,6],[7,8,9]].my_transpose).to eq([[1,4,7],[2,5,8],[3,6,9]])
+      expect(subject.my_transpose).to eq([[1,4,7],[2,5,8],[3,6,9]])
+    end
+
+    it "doesn't modify the original matrix" do
+      subject.my_transpose
+      expect(subject).to eq([[1,2,3],[4,5,6],[7,8,9]])
     end
   end
 end

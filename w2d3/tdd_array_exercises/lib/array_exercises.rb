@@ -14,4 +14,15 @@ class Array
     end
     pairs
   end
+
+  def my_transpose
+    return [] if empty?
+    transpose = Array.new(self[0].length) { Array.new(length) }
+    each_with_index do |row, row_idx|
+      row.each_with_index do
+        |cell, col_idx| transpose[col_idx][row_idx] = cell
+      end
+    end
+    transpose
+  end
 end
