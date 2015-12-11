@@ -14,4 +14,8 @@ class Game
     end
     stacks[to_stack].push(stacks[from_stack].pop)
   end
+
+  def won?
+    stacks[1] == [3, 2, 1] || stacks[2] == [3,2,1]
+  end
 end
