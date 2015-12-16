@@ -15,7 +15,7 @@ def my_min2(array)    # O(n), O(1) memory
 end
 
 def largest_contiguous_subsum(array) # O(2^n), O(2^n) memory
-  subsets = contiguous_subsets(array)
+  subsets = contiguous_subsets(array)  # O(2^n) time, O(2^n) memory
   max_sum = 0
   subsets.drop(1).each do |subset|   # O(2^n)
     sum = subset.inject(&:+)
@@ -39,11 +39,8 @@ def largest_contiguous_subsum2(array)  # O(n) time, O(1) memory
   current_sum = 0  # O(1) time, O(1) memory
   array.each do |el|  # O(n) time, O(1) memory
     current_sum += el  # O(1) time, O(1) memory
-    if current_sum < 0  # O(1) time, O(1) memory
-      current_sum = 0  # O(1) time, O(1) memory
-    elsif current_sum > largest_sum  # O(1) time, O(1) memory
-      largest_sum = current_sum  # O(1) time, O(1) memory
-    end
+    largest_sum = current_sum if current_sum > largest_sum  # O(1) time, O(1) memory
+    current_sum = 0 if current_sum < 0  # O(1) time, O(1) memory
   end
   largest_sum  # O(1) time, O(1) memory
 end
