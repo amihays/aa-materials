@@ -1,19 +1,19 @@
-class Queue
+class Stack
   def initialize
     @store = []
   end
 
-  def enqueue(el)
+  def pop
+    store.pop
+  end
+
+  def push(el)
     store.push(el)
     nil
   end
 
-  def dequeue
-    store.shift
-  end
-
   def peek
-    store.first
+    store.last
   end
 
   def size
