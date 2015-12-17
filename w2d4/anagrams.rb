@@ -30,3 +30,13 @@ def second_anagram?(string1, string2) # O(n^2) time, O(n) space
   end
   true
 end
+
+
+def third_anagram?(string1, string2) # O(nlogn) time, O(n) space
+  str1, str2 = sort(string1), sort(string2)
+  str1 == str2
+end
+
+def sort(string)  # O(nlogn) time, O(n) space
+  string.split('').sort.join('')
+end
