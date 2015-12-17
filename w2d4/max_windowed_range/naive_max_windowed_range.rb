@@ -7,9 +7,3 @@ def windowed_max_range(array, range) # O(n * m) time, O(m) space
   end
   max_range
 end
-
-
-puts windowed_max_range([1, 0, 2, 5, 4, 8], 2) == 4 # 4, 8
-puts windowed_max_range([1, 0, 2, 5, 4, 8], 3) == 5 # 0, 2, 5
-puts windowed_max_range([1, 0, 2, 5, 4, 8], 4) == 6 # 2, 5, 4, 8
-puts windowed_max_range([1, 3, 2, 5, 4, 8], 5) == 6 # 3, 2, 5, 4, 8
