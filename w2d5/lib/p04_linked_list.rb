@@ -1,8 +1,8 @@
 class Link
-  attr_accessor :key, :val, :next
+  attr_accessor :key, :val, :next, :prev
 
-  def initialize(key = nil, val = nil, nxt = nil)
-    @key, @val, @next = key, val, nxt
+  def initialize(key = nil, val = nil, nxt = nil, prev = nil)
+    @key, @val, @next, @prev = key, val, nxt, prev
   end
 
   def to_s
@@ -12,10 +12,11 @@ end
 
 class LinkedList
   include Enumerable
-  attr_reader :head
+  attr_reader :head, :tail
 
   def initialize
-    @head = Link.new
+    @head, @tail = Link.new, Link.new
+    @head.next, @tail.prev = tail, head
   end
 
   def [](i)
@@ -24,18 +25,18 @@ class LinkedList
   end
 
   def first
-    head.next
+    head.next unless empty?
   end
 
   def last
+    return if empty?
     current_link = head.next
-    return unless current_link
-    current_link = current_link.next until current_link.next.nil?
+    current_link = current_link.next until current_link.next == tail
     current_link
   end
 
   def empty?
-    head.next.nil?
+    head.next == tail
   end
 
   def get(key)
@@ -48,26 +49,28 @@ class LinkedList
   end
 
   def insert(key, val)
-    new_link = Link.new(key, val, nil)
-    last.nil? ? head.next = new_link : last.next = new_link
+    new_link = Link.new(key, val, tail, nil)
+    if empty?
+      head.next = new_link
+      new_link.prev = head
+    else
+      new_link.prev = last
+      last.next = new_link
+    end
+    tail.prev = new_link
   end
 
   def remove(key)
-    prev_link = head
-    current_link = head.next
-    until current_link.nil?
-      if current_link.key == key
-        prev_link.next = current_link.next
-        return current_link
-      end
-      prev_link, current_link = current_link, current_link.next
-    end
-    false
+    remove_link = find { |link| link.key == key }
+    return unless remove_link
+    remove_link.prev.next = remove_link.next
+    remove_link.next.prev = remove_link.prev
+    remove_link
   end
 
   def each
     current_link = head.next
-    until current_link.nil?
+    until current_link == tail
       yield(current_link)
       current_link = current_link.next
     end
