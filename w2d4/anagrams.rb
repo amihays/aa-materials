@@ -1,5 +1,5 @@
-def first_anagram?(string1, string2) # O(n!) time
-  anagrams(string1).include?(string2)  # O(m) time where m is the number of anagrams
+def first_anagram?(string1, string2) # O(n!) time and O(n!) space
+  anagrams(string1).include?(string2)
 end
 
 def anagrams(string) # O(n!) time & O(n!) space
@@ -14,4 +14,21 @@ def anagrams(string) # O(n!) time & O(n!) space
   anagrams # O(1) time
 end
 
-p first_anagram?("abc", "cbb")
+def second_anagram?(string1, string2)
+  until string1 == "" && string2 == ""
+    char = string1[0]
+    found = false
+    string2.length.times do |idx|
+      if char == string2[idx]
+        string2 = string2[0...idx] + string2[idx + 1...string2.length]
+        found = true
+        break
+      end
+    end
+    return false unless found
+    string1 = string1[1...string1.length]
+  end
+  true
+end
+
+puts second_anagram?("abs", "sbb")
