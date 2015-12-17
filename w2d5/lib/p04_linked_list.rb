@@ -58,6 +58,7 @@ class LinkedList
       last.next = new_link
     end
     tail.prev = new_link
+    new_link
   end
 
   def remove(key)
@@ -65,7 +66,7 @@ class LinkedList
     return unless remove_link
     remove_link.prev.next = remove_link.next
     remove_link.next.prev = remove_link.prev
-    remove_link
+    remove_link.val
   end
 
   def each
@@ -76,7 +77,6 @@ class LinkedList
     end
   end
 
-  # uncomment when you have `each` working and `Enumerable` included
   def to_s
     inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
   end

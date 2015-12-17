@@ -29,7 +29,6 @@ class HashSet
 
   def [](key)
     @store[key.hash % num_buckets]
-    # optional but useful; return the bucket corresponding to `num`
   end
 
   def num_buckets

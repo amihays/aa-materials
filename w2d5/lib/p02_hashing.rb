@@ -1,5 +1,5 @@
 class Fixnum
-  # Fixnum#hash already implemented for you
+  # Fixnum#hash already implemented
 end
 
 class Array
