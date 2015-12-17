@@ -31,7 +31,6 @@ def second_anagram?(string1, string2) # O(n^2) time, O(n) space
   true
 end
 
-
 def third_anagram?(string1, string2) # O(nlogn) time, O(n) space
   str1, str2 = sort(string1), sort(string2)
   str1 == str2
@@ -39,4 +38,14 @@ end
 
 def sort(string)  # O(nlogn) time, O(n) space
   string.split('').sort.join('')
+end
+
+def fourth_anagram?(string1, string2) # O(n) time, O(n) space
+  letters = Hash.new(0)
+  string1.each_char { |char| letters[char] += 1 }
+  string2.each_char do |char|
+    return false unless letters[char]
+    letters[char] == 1 ? letters.delete(char) : letters[char] -= 1
+  end
+  letters.empty?
 end
