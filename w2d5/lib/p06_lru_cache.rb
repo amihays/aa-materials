@@ -19,9 +19,7 @@ class LRUCache
       link = @map[key]
       update_link!(link)
     else
-      value = calc!(key)
-      eject! if @map.count > @max
-      value
+      calc!(key)
     end
   end
 
@@ -35,13 +33,17 @@ class LRUCache
     value = @prc.call(key)
     new_link = @store.insert(key, value)
     @map[key] = new_link
+    eject! if count > @max
     value
   end
 
   def update_link!(link)
     link.prev.next = link.next
     link.next.prev = link.prev
-    @store.insert(link.key, link.val)
+    link.prev = @store.tail.prev
+    @store.tail.prev.next = link
+    link.next = @store.tail
+    @store.tail.prev = link
     link.val
   end
 
