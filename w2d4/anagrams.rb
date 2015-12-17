@@ -11,24 +11,22 @@ def anagrams(string) # O(n!) time & O(n!) space
     new_anagrams = partial_anagrams.map { |str| string[idx] + str } # O((n - 1)!) time and space
     anagrams.concat(new_anagrams) # O((n - 1)!) time and space
   end
-  anagrams # O(1) time
+  anagrams
 end
 
-def second_anagram?(string1, string2)
-  until string1 == "" && string2 == ""
-    char = string1[0]
+def second_anagram?(string1, string2) # O(n^2) time, O(n) space
+  arr1, arr2 = string1.split(''), string2.split('')
+  until arr1.empty? && arr2.empty?
+    char = arr1.shift # O(n) time, O(n) space
     found = false
-    string2.length.times do |idx|
-      if char == string2[idx]
-        string2 = string2[0...idx] + string2[idx + 1...string2.length]
+    arr2.each_index do |idx| # O(n) time
+      if char == arr2[idx]
+        arr2.delete_at(idx) # O(n) time, O(n) space
         found = true
         break
       end
     end
     return false unless found
-    string1 = string1[1...string1.length]
   end
   true
 end
-
-puts second_anagram?("abs", "sbb")
