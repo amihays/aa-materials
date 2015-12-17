@@ -18,7 +18,7 @@ class MaxMinStack
   end
 
   def pop
-    store.pop.value
+    store.pop[:value]
   end
 
   def min
