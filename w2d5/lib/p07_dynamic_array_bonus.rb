@@ -66,15 +66,17 @@ class DynamicArray
     # One spec won't pass:
     # "DynamicArray#resize! should call #resize!
     # when too many elements are inserted"
-    # count == 3 and capacity == 3 in that spec
+    # When error occurs, count == 3 and capacity == 3.
+    # Doesn't call #resize! function at all, but does call #test!
 
     # Resizing works in all other specs when push is called.
-
-    # Works (although spec still fails because
-    # looks for "#resize!" call) if I change "resize!"
-    # to "resizee!"
-    resize! if @count >= self.capacity
-    puts(@count, self.capacity) if val == 4
+    # Doesn't raise error when exact same example is run directly.
+    if @count >= self.capacity
+      # test!
+      resize!
+      # test!
+    end
+    # puts(@count, self.capacity) if val == 4
     @store[count] = val
     @count += 1
     self
@@ -120,11 +122,7 @@ class DynamicArray
   end
 
   def each
-    i = 0
-    while i < count
-      yield(@store[i])
-      i += 1
-    end
+    @count.times { |i| yield self[i] }
     self
   end
 
@@ -145,9 +143,17 @@ class DynamicArray
   private
 
   def resize!
-    puts "resizing!"
+    # puts "resizing!"
     new_store = StaticArray.new(capacity * 2)
     each_with_index { |el, i| new_store[i] = el }
     @store = new_store
   end
+
+  # def test!
+  #   puts "Reached test!!"
+  # end
 end
+#
+# arr = DynamicArray.new(3)
+# (1..3).each { |i| puts arr.push(i) }
+# puts arr.push(4)
