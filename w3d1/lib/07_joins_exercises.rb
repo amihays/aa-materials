@@ -40,6 +40,16 @@ end
 def ford_films
   # List the films in which 'Harrison Ford' has appeared.
   execute(<<-SQL)
+    SELECT
+      movies.title
+    FROM
+      movies
+    JOIN
+      castings ON castings.movie_id = movies.id
+    JOIN
+      actors ON castings.actor_id = actors.id
+    WHERE
+      actors.name = 'Harrison Ford';
   SQL
 end
 
@@ -48,12 +58,32 @@ def ford_supporting_films
   # role. [Note: the ord field of casting gives the position of the actor. If
   # ord=1 then this actor is in the starring role]
   execute(<<-SQL)
+    SELECT
+      movies.title
+    FROM
+      movies
+    JOIN
+      castings ON movies.id = castings.movie_id
+    JOIN
+      actors ON castings.actor_id = actors.id
+    WHERE
+      actors.name = 'Harrison Ford' and castings.ord > 1;
   SQL
 end
 
 def films_and_stars_from_sixty_two
   # List the title and leading star of every 1962 film.
   execute(<<-SQL)
+    SELECT
+      movies.title, actors.name
+    FROM
+      movies
+    JOIN
+      castings ON movies.id = castings.movie_id
+    JOIN
+      actors ON actors.id = castings.actor_id
+    WHERE
+      castings.ord = 1 AND movies.yr = 1962;
   SQL
 end
 
@@ -61,6 +91,20 @@ def travoltas_busiest_years
   # Which were the busiest years for 'John Travolta'? Show the year and the
   # number of movies he made for any year in which he made at least 2 movies.
   execute(<<-SQL)
+    SELECT
+      movies.yr, COUNT(*)
+    FROM
+      movies
+    JOIN
+      castings ON castings.movie_id = movies.id
+    JOIN
+      actors ON castings.actor_id = actors.id
+    WHERE
+      actors.name = 'John Travolta'
+    GROUP BY
+      movies.yr
+    HAVING
+      COUNT(*) >= 2;
   SQL
 end
 
@@ -68,13 +112,41 @@ def andrews_films_and_leads
   # List the film title and the leading actor for all of the films 'Julie
   # Andrews' played in.
   execute(<<-SQL)
-  SQL
+    SELECT
+      movies.title, leads.name
+    FROM
+      movies
+    JOIN
+      castings andrews_castings ON andrews_castings.movie_id = movies.id
+    JOIN
+      actors andrews ON andrews.id = andrews_castings.actor_id
+    JOIN
+      castings lead_castings ON lead_castings.movie_id = movies.id
+    JOIN
+      actors leads ON leads.id = lead_castings.actor_id
+    WHERE
+      andrews.name = 'Julie Andrews' AND lead_castings.ord = 1;
+    SQL
 end
 
 def prolific_actors
   # Obtain a list in alphabetical order of actors who've had at least 15
   # starring roles.
   execute(<<-SQL)
+    SELECT
+      actors.name
+    FROM
+      actors
+    JOIN
+      castings ON castings.actor_id = actors.id
+    WHERE
+      castings.ord = 1
+    GROUP BY
+      actors.name
+    HAVING
+      COUNT(*) >= 15
+    ORDER BY
+      actors.name;
   SQL
 end
 
@@ -82,11 +154,35 @@ def films_by_cast_size
   # List the films released in the year 1978 ordered by the number of actors
   # in the cast (descending), then by title (ascending).
   execute(<<-SQL)
+    SELECT
+      movies.title, COUNT(*)
+    FROM
+      movies
+    JOIN
+      castings ON movies.id = castings.movie_id
+    WHERE
+      movies.yr = 1978
+    GROUP BY
+      movies.title
+    ORDER BY
+      COUNT(*) DESC, movies.title
   SQL
 end
 
 def colleagues_of_garfunkel
   # List all the people who have played alongside 'Art Garfunkel'.
   execute(<<-SQL)
+    SELECT
+      a1.name
+    FROM
+      actors a1
+    JOIN
+      castings c1 ON c1.actor_id = a1.id
+    JOIN
+      castings art_castings ON art_castings.movie_id = c1.movie_id
+    JOIN
+      actors art ON art.id = art_castings.actor_id
+    WHERE
+      a1.name != 'Art Garfunkel' AND art.name = 'Art Garfunkel';
   SQL
 end
