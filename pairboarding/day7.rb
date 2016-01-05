@@ -48,3 +48,17 @@ def weighted_random_index_test(array)
   end
   tallies
 end
+
+def move_zeros(nums)
+  swap_idx = nums.length - 1
+  idx = 0
+  while idx < swap_idx
+    if nums[idx] == 0
+      nums[idx], nums[swap_idx] = nums[swap_idx], nums[idx]
+      swap_idx -= 1
+    else
+      idx += 1
+    end
+  end
+  nums
+end
