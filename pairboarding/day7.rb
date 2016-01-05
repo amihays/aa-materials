@@ -62,3 +62,21 @@ def move_zeros(nums)
   end
   nums
 end
+
+def look_and_say(array)
+  return [] if array.empty?
+  counts = []
+  current_el = array.first
+  current_count = 0
+  array.each do |el|
+    if current_el == el
+      current_count += 1
+    else
+      counts << [current_count, current_el]
+      current_el = el
+      current_count = 1
+    end
+  end
+  counts << [current_count, current_el]
+  counts
+end
