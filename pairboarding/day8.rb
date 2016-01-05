@@ -26,3 +26,22 @@ class Stack
     @values.pop.first
   end
 end
+
+
+class StackQueue
+  def initialize
+    @on_stack = []
+    @off_stack = []
+  end
+
+  def enqueue(el)
+    @on_stack << el
+  end
+
+  def dequeue
+    if @off_stack.empty?
+      @off_stack << @on_stack.pop until @on_stack.empty?
+    end
+    @off_stack.pop
+  end
+end
