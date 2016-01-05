@@ -29,3 +29,22 @@ def string_sort(strings, length)
   end
   strings
 end
+
+def weighted_random_index(array)
+  sum = array.inject(&:+)
+  rand_num = rand(sum)
+  upper_bound = 0
+  array.each_with_index do |el, idx|
+    upper_bound += el
+    return idx if rand_num < upper_bound
+  end
+end
+
+def weighted_random_index_test(array)
+  tallies = Array.new(array.length, 0)
+  1000000.times do
+    num = weighted_random_index(array)
+    tallies[num] += 1
+  end
+  tallies
+end
